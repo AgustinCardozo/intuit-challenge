@@ -1,7 +1,6 @@
 ﻿using Asp.Versioning;
 using Cliente.Application.DTOs;
 using Cliente.Application.UseCases.Contracts;
-using Entities = Cliente.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cliente.Api.Conttrollers.v1

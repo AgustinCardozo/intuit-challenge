@@ -17,6 +17,7 @@ public static class DependecyInjection
         {
             options.UseNpgsql(connectionString);
         });
+        services.AddScoped<IClienteDapperContext, ClienteDapperContext>();
         services.AddScoped<IClienteRepository, ClienteRepository>();
         services.AddSingleton<ClienteDapperContext>();
 

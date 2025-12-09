@@ -4,7 +4,12 @@ using System.Data;
 
 namespace Cliente.Infrastructure.Data
 {
-    public class ClienteDapperContext(IConfiguration configuration)
+    public interface IClienteDapperContext
+    {
+        IDbConnection CreateConnection(); 
+    }
+
+    public class ClienteDapperContext(IConfiguration configuration) : IClienteDapperContext
     {
         public IDbConnection CreateConnection() => new NpgsqlConnection(configuration.GetConnectionString("DefaultConnection"));
     }

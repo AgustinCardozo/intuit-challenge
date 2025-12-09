@@ -4,7 +4,6 @@ using Cliente.Application.UseCases.Contracts;
 using Cliente.Application.Validators;
 using Cliente.Domain.Contracts.Repositories;
 using Cliente.Domain.Exceptions;
-using FluentValidation;
 using System.Text;
 using Entities = Cliente.Domain.Entities;
 
@@ -55,6 +54,11 @@ namespace Cliente.Application.UseCases
         public async Task<List<GetClienteDto>> GetAllAsync()
         {
             var clientes = await clienteRepository.GetAllAsync();
+
+            if(clientes == null || clientes.Count == 0)
+            {
+                return new List<GetClienteDto>();
+            }
             
             return clientes.Select(c => ClienteMapping.MapToDto(c)).ToList();
         }
@@ -74,6 +78,12 @@ namespace Cliente.Application.UseCases
         public async Task<List<GetClienteDto>> SearchAsync(string searchName)
         {
             var clientes = await clienteRepository.SearchByNameAsync(searchName);
+
+            if (clientes == null || clientes.Count == 0)
+            {
+                return new List<GetClienteDto>();
+            }
+
             return clientes.Select(c => ClienteMapping.MapToDto(c)).ToList();
         }
 
@@ -92,7 +102,7 @@ namespace Cliente.Application.UseCases
                 var errors = result.Errors.ToList();
                 var errorMsg = new StringBuilder();
                 errorMsg.AppendLine("Datos de registros incorrectos: ");
-                errors.ForEach(error => errorMsg.AppendLine($"\t{error}"));
+                errors.ForEach(error => errorMsg.AppendLine($"{error}"));
                 throw new ClientException(errorMsg.ToString());
             }
 
